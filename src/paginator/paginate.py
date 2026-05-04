@@ -14,6 +14,5 @@ def paginate(items: list, page: int, size: int) -> list:
     if size < 1:
         raise ValueError("size must be >= 1")
     start = (page - 1) * size
-    # BUG: end should be `page * size` (exclusive). The current value drops the last item of every page.
-    end = page * size - 1
+    end = page * size
     return items[start:end]
