@@ -2,7 +2,7 @@
 verification_policies:
   default:
     label_match: []
-    required_runners: [typecheck, lint, test]
+    required_runners: [typecheck, lint, build, test]
     visual_required: false
 
 hooks: {}
