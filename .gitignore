@@ -1,0 +1,16 @@
+__pycache__/
+*.egg-info/
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Symphony runtime artifacts
+.symphony/workspaces/
+.symphony/archive/
+.symphony/artifacts/
+.symphony/daily_cost_cache.json
+.symphony/orchestrator.pid
+
+# Verification packets are uploaded; local copies don't go to git
+.verification/

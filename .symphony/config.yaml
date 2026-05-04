@@ -1,0 +1,75 @@
+tracker:
+  type: linear
+  workspace_id: "cc20d13d-308d-4d67-8084-ea417e1fcc11"
+  ready_state_id: "c72de202-6259-46db-8e82-42033e30f3b2"        # Todo
+  human_review_state_id: "3a2d795a-8e5b-456f-8cac-baee6bc8db0d" # In Progress
+  escalation_state_id: "f324a9b2-b3b1-4c82-b056-cdfc3fdfaf8c"   # Backlog
+  agent_label: "agent:autonomous"
+
+polling:
+  interval_seconds: 30
+  max_concurrent_tickets: 1
+  max_concurrent_subtasks_per_ticket: 1   # E1 single-subtask only
+
+workspace:
+  base_dir: ".symphony/workspaces"
+  ticket_branch_prefix: "claude/"
+  archive_dir: ".symphony/archive"
+  artifact_store:
+    type: local
+    bucket: ".symphony/artifacts"
+    prefix: "first-run/"
+
+agents:
+  planner:
+    model: "claude-opus-4-7"
+    max_turns: 30
+    max_budget_usd: 2.00
+    cost_cap_usd: 2.00
+  worker:
+    model: "claude-sonnet-4-6"
+    max_turns: 40
+    max_budget_usd: 1.50
+    cost_cap_usd: 1.50
+  verifier:
+    model: "claude-sonnet-4-6"
+    model_high_risk: "claude-opus-4-7"
+    max_turns: 20
+    max_budget_usd: 1.00
+    cost_cap_usd: 1.00
+  integrator:
+    model: "claude-opus-4-7"
+    max_turns: 25
+    max_budget_usd: 1.50
+    cost_cap_usd: 1.50
+
+budgets:
+  ticket_cost_cap_usd: 5.00       # generous for first run; tighten later
+  daily_total_cap_usd: 25.00
+  alert_threshold_usd: 10.00
+
+observability:
+  opik:
+    endpoint: "https://www.comet.com/opik/api/"
+    project_name: "symphony"
+  alerts:
+    slack_webhook_url: ""
+
+retry:
+  initial_backoff_seconds: 10
+  max_backoff_seconds: 300
+  max_subtask_retries: 2
+  max_replan_attempts: 1
+
+security:
+  allow_unsandboxed_workers: true   # E1 — sandboxing is MUD-54 (E5)
+  allow_unrestricted_network: true
+  secrets_paths:
+    - "**/.env"
+    - "**/.env.*"
+    - "**/*.pem"
+    - "**/*.key"
+    - "**/credentials.json"
+
+recovery:
+  allow_stale_resume: false

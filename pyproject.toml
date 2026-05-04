@@ -1,0 +1,12 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "paginator"
+version = "0.1.0"
+description = "Throwaway target for symphony's first e2e run."
+requires-python = ">=3.11"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/paginator"]
